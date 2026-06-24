@@ -1,15 +1,15 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
+import { validateQuestions } from '../utils/validation.js';
 
 export const getCharachter = async (req, res) => {
   try {
     const { questions } = req.body;
 
-    if (!questions || !Array.isArray(questions) || questions.length === 0) {
-      return res.status(400).json({
-        message: "Questions array is required",
-      });
-    }             
+    const validation = validateQuestions(questions);
+    if (!validation.valid) {
+      return res.status(400).json({ message: validation.message });
+    }
 
     const ai = new GoogleGenAI({});
 
