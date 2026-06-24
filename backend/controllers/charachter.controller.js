@@ -11,7 +11,7 @@ export const getCharachter = async (req, res) => {
       });
     }             
 
-    const ai = new GoogleGenAI({});
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     const formattedQA = questions
       .map((q, i) => `${i + 1}. Q: ${q.question}\n   A: ${q.answer}`)
