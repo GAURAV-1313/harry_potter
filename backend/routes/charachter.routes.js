@@ -1,8 +1,8 @@
 import express from 'express';
-import { getCharachter } from '../controllers/charachter.controller.js';
+import { getCharacter } from '../controllers/charachter.controller.js';
 
 const router = express.Router();
 
-router.post('/get-charachter', getCharachter)
+router.post('/get-character', getCharacter)
 
 export default router;
