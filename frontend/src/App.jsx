@@ -10,6 +10,7 @@ function App() {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   const currentQuestion = quizQuestions[currentIndex];
 
@@ -47,11 +48,31 @@ function App() {
       setResult(res.data.charachter);
 
     } catch (error) {
-      console.log(error);
+      setError('Failed to analyze personality. Please try again.');
+      console.error('Quiz submission error:', error);
     } finally {
       setLoading(false);
     }
 
+  }
+
+  if (error) {
+    return (
+      <div className="bg-[#0e1a40] min-h-screen flex flex-col items-center justify-center text-[#936b2d]">
+        <h1 className="text-2xl mb-4">Oops! Something went wrong</h1>
+        <p className="mb-6 text-center">{error}</p>
+        <button
+          onClick={() => {
+            setError(null);
+            setLoading(true);
+            submitQuiz(answers);
+          }}
+          className="bg-[#1b2a6b] hover:bg-[#273c9b] px-6 py-3 rounded-lg text-[#936b2d] font-semibold"
+        >
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   if (loading) {

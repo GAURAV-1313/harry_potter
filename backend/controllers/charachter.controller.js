@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
-export const getCharachter = async (req, res) => {
+export const getCharacter = async (req, res) => {
   try {
     const { questions } = req.body;
 
@@ -9,7 +9,7 @@ export const getCharachter = async (req, res) => {
       return res.status(400).json({
         message: "Questions array is required",
       });
-    }             
+    }              
 
     const ai = new GoogleGenAI({});
 
@@ -32,14 +32,13 @@ ${formattedQA}
       contents: prompt,
     });
 
-    
     const geminiResponse = response.text;
     
     console.log('Response from gemini: ',response.text);
 
     return res.status(200).json({
       message: geminiResponse,
-      charachter: geminiResponse
+      character: geminiResponse
     });
   } catch (error) {
     res.status(500).json({
