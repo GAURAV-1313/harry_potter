@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
+const responseCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000;
+
 export const getCharachter = async (req, res) => {
   try {
     const { questions } = req.body;
@@ -14,7 +17,11 @@ export const getCharachter = async (req, res) => {
     const ai = new GoogleGenAI({});
 
     const formattedQA = questions
-      .map((q, i) => `${i + 1}. Q: ${q.question}\n   A: ${q.answer}`)
+      .map((q, i) => {
+        const safeQuestion = String(q.question).replace(/[<>]/g, '');
+        const safeAnswer = String(q.answer).replace(/[<>]/g, '');
+        return `${i + 1}. Q: ${safeQuestion}\n   A: ${safeAnswer}`;
+      })
       .join("\n\n");
 
     const prompt = `
