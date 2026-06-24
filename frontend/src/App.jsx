@@ -3,9 +3,10 @@ import axios from 'axios';
 import { QuizView } from "./components/QuizView";
 import { LoadingView } from "./components/LoadingView";
 import { ResultView } from "./components/ResultView";
+import { questions } from "./constants/questions";
 
 function App() {
-  const quizQuestions = [];
+  const quizQuestions = questions.quiz.questions;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ function App() {
     const updatedAnswers = [
       ...answers,
       {
-        question: null,
+        question: quizQuestions[currentIndex].question,
         answer
       }
     ]
