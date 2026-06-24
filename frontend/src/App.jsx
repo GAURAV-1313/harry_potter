@@ -75,15 +75,10 @@ function App() {
         <h1 className="text-4xl mb-4">You are</h1>
         <h2 className="text-5xl font-bold">{result}</h2>
         <div className="mt-4 text-center">
-          <p className="text-lg opacity-80">House: {result.includes('Gryffindor') ? 'Gryffindor' : result.includes('Ravenclaw') ? 'Ravenclaw' : result.includes('Hufflepuff') ? 'Hufflepuff' : result.includes('Slytherin') ? 'Slytherin' : 'Unknown'}</p>
+          <p className="text-lg opacity-80">House: {getHouse(result)}</p>
         </div>
         <button
-          onClick={() => {
-            setCurrentIndex(0);
-            setAnswers([]);
-            setResult(null);
-            setLoading(false);
-          }}
+          onClick={resetQuiz}
           className="mt-8 bg-[#1b2a6b] hover:bg-[#273c9b] px-6 py-3 rounded-lg text-[#936b2d] font-semibold transition-colors"
         >
           Retake Quiz
@@ -91,6 +86,21 @@ function App() {
       </div>
     )
   }
+
+  const getHouse = (result) => {
+    if (result.includes('Gryffindor')) return 'Gryffindor';
+    if (result.includes('Ravenclaw')) return 'Ravenclaw';
+    if (result.includes('Hufflepuff')) return 'Hufflepuff';
+    if (result.includes('Slytherin')) return 'Slytherin';
+    return 'Unknown';
+  };
+
+  const resetQuiz = () => {
+    setCurrentIndex(0);
+    setAnswers([]);
+    setResult(null);
+    setLoading(false);
+  };
 
   return (
     <>
