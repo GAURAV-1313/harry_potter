@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import healthCheck from './routes/healthCheck.routes.js'
-import character from './routes/charachter.routes.js'
+import character from './routes/character.routes.js'
 import job from './utils/cron.js'
 
 const PORT = process.env.PORT || 8000;
