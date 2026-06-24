@@ -14,6 +14,12 @@ export const getCharachter = async (req, res) => {
       });
     }             
 
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({
+        message: "Server configuration error: API key not configured",
+      });
+    }
+
     const ai = new GoogleGenAI({});
 
     const formattedQA = questions
