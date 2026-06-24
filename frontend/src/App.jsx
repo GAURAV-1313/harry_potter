@@ -12,6 +12,7 @@ function App() {
   const [result, setResult] = useState(null);
 
   const currentQuestion = quizQuestions[currentIndex];
+  const totalQuestions = quizQuestions.length;
 
   const handleAnswerSelect = (answer) => {
     const updatedAnswers = [
@@ -90,6 +91,9 @@ function App() {
         </p>
 
         <div className="max-w-2xl mx-auto">
+          <p className="text-sm text-[#936b2d] opacity-70 mb-2">
+            Question {currentIndex + 1} of {totalQuestions}
+          </p>
           <h2 className="text-2xl mb-6">
             {currentQuestion.question}
           </h2>
