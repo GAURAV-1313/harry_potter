@@ -9,7 +9,7 @@ export const getCharacter = async (req, res) => {
       return res.status(400).json({
         message: "Questions array is required",
       });
-    }             
+    }              
 
     const ai = new GoogleGenAI({});
 
@@ -32,7 +32,6 @@ ${formattedQA}
       contents: prompt,
     });
 
-    
     const geminiResponse = response.text;
     
     console.log('Response from gemini: ',response.text);
