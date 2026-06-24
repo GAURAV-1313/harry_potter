@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
+const responseCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000;
+
 export const getCharachter = async (req, res) => {
   try {
     const { questions } = req.body;
@@ -10,6 +13,16 @@ export const getCharachter = async (req, res) => {
         message: "Questions array is required",
       });
     }             
+
+    const cacheKey = JSON.stringify(questions.sort((a, b) => a.question.localeCompare(b.question)));
+    const cached = responseCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      return res.status(200).json({
+        message: cached.response,
+        charachter: cached.response,
+        cached: true,
+      });
+    }
 
     const ai = new GoogleGenAI({});
 
@@ -36,6 +49,11 @@ ${formattedQA}
     const geminiResponse = response.text;
     
     console.log('Response from gemini: ',response.text);
+
+    responseCache.set(cacheKey, {
+      response: geminiResponse,
+      timestamp: Date.now(),
+    });
 
     return res.status(200).json({
       message: geminiResponse,
