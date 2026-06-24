@@ -1,6 +1,17 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
+/**
+ * Determines the Harry Potter character that matches user's personality
+ * @function getCharachter
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {Array<object>} req.body.questions - Array of question-answer pairs
+ * @param {string} req.body.questions[].question - The question text
+ * @param {string} req.body.questions[].answer - The selected answer
+ * @returns {object} JSON response with matched character
+ * @throws {Error} If API key is not configured or Gemini API fails
+ */
 export const getCharachter = async (req, res) => {
   try {
     const { questions } = req.body;
