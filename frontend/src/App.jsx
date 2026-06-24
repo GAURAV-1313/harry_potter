@@ -13,6 +13,13 @@ function App() {
 
   const currentQuestion = quizQuestions[currentIndex];
 
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+      setAnswers(prev => prev.slice(0, -1));
+    }
+  };
+
   const handleAnswerSelect = (answer) => {
     const updatedAnswers = [
       ...answers,
@@ -93,6 +100,15 @@ function App() {
           <h2 className="text-2xl mb-6">
             {currentQuestion.question}
           </h2>
+
+          {currentIndex > 0 && (
+            <button
+              onClick={handleBack}
+              className="text-[#936b2d] hover:underline text-sm mb-4"
+            >
+              Previous Question
+            </button>
+          )}
 
           <div className="flex flex-col gap-4">
             {currentQuestion.options.map((option, index) => (
